@@ -1,0 +1,112 @@
+Especificaci	ó	n de API	 	
+ 
+ 	
+Version	 	Date	 	Author	 	Description	 	
+1.0	 	15	-Nov	-201	8 	Hanoi	 S.A.	 	Borrador Inicial	 	
+1.1	 	7-Dic	-2018	 	Hanoi S.A.	 	Agrega array 
+operaciones en 
+retorno	 y total 	
+monto
+
+Metodos	 	
+ 
+1.	 External verify	 	
+ 
+Verifica y devuelve el usuario con	sultado por número de documento, con un array de detalles de 	
+sus operaciones	 	
+ 
+Request	 	 	
+Metodo	 	URL	 	
+POST	 	http://api.develop.monchis.com.py/driver/user/external_verify	 	
+ 
+  	
+Tipo	 	Parametros	 	Valores	 	
+HEAD 	 	
+POST 	 	
+POST	 	
+Authentication Basic	 	
+document_number	  	
+document_type_id	 	
+String	 	
+String	 	
+String	 	
+ 
+ 
+ 	
+Ejemplo	 	JSON Request	 	
+POST	 	{ 
+ 	"document_number" : "7706759",	 	
+ 	"document_type_id" : "1"	 	
+}
+
+Response	 	 	
+Status	 	Response	 	
+200	 	{ 
+    "success": true,	 	
+    "data": {	 	
+        	"user": {	 	
+            	"id": 5,	 	
+            	"document_number": "4994624",	 	
+            	"first_name": "Arnaldo",	 	
+            	"last_name": "Riquelme",	 	
+            	"birth_date": "2018	-10-08",	 	
+            	"gender": " ",	 	
+            	"phone": "0992871626",	 	
+            	"document_type_id": 1,	 	
+            	"detail_delivery": [	 	
+                	{ 	
+                    	"branch_name": "Monchis Store Central",	 	
+        	            	"subtotal": "520000.00",	 	
+                    	"account_number": 	123456789	, 	
+                    	"account_denomination": 	“Monchis Py	” 	
+                	} 	
+            	], 	
+            	"total": "520000.00",	 	
+            	"document_type": {	 	
+                	"id": 1,	 	
+                	"name": "Cedula de Identidad",	 	
+                	"enabled": true	 	
+            	} 	
+        	} 	
+    } 	
+} 	
+40	1 	{ 
+    "success": false,	 	
+    "data": "Las credenciales son incorrectas"	 	
+} 	
+400	 	{ 
+    "success": false,	 	
+    "data": "El cliente con el documento 4283999 no existe"	 	
+}
+
+500	 	{ 
+    "success": false,	 	
+    "data": "	Error interno	" 	
+} 	
+ 
+ 
+ 
+Observaciones	 	
+● 	Todas las respuestas están en formato JSON	 	
+● 	Todos los parámetros de solicitud son obligatorios, a menos que 	se marque como 	
+opciona	l [opcional]	 	
+● 	El método de autenticación 	va en el Header, como Basic Authentication.	 	
+● 	Los tipos de valores aceptados para un pará	metro se muestra en la columna “Values”, si 	
+aceptara otro tipo de valor 	el mismo 	ira con el símbolo pipe (|). [ Integer | String] un entero 	
+o una cadena.	 	
+● 	El usuario/password para la autenticacion en ambiente de desarrollo es 
+eglobal	it/eglobal	it2018	 	
+● 	Datos de prueba, tipo documento = 1, 	números	 [3995213	, 4994624	] 	
+ 
+Status	 Codes	 	
+ 
+Todos los códigos de estado son códigos de estado HTTP estándar. Los siguientes se utilizan 
+en esta API	 	
+. 
+ 
+2XX 	– La 	respuesta fue éxitos	a y devuelve un resultado	 (objeto)	 	
+4XX 	– Error del lado del cliente (documento invalido, login incorrecto etc…)	 	
+5XX 	– Error del servidor	 	
+ 
+En los las respuestas distintas a 200, se devuelve un string con el mensaje del error en 
+cuestion	.
