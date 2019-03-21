@@ -43,7 +43,7 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: 'http://localhost:8888/uploadfile',
+            url: 'https://evening-bayou-97579.herokuapp.com/uploadfile',
             data: formData,
             type: 'post',
             contentType: false,

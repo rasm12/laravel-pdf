@@ -19,7 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'http://localhost:8888/read',
-        'http://localhost:8888/uploadfile'
+        'https://evening-bayou-97579.herokuapp.com/read',
+        'https://evening-bayou-97579.herokuapp.com/uploadfile'
     ];
 }
