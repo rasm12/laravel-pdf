@@ -55,6 +55,8 @@ class ReadPdfController extends Controller {
 
         $parser = new \Smalot\PdfParser\Parser();
         $sourcefile = public_path() . '\\uploads\\' . $file->getClientOriginalName();
+        
+        error_log("Path file $sourcefile");
 
         $pdf = $parser->parseFile($sourcefile);
         try {
