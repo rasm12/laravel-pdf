@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\PdfToText\Pdf;
 
 class ReadPdfController extends Controller {
 
@@ -24,47 +25,62 @@ class ReadPdfController extends Controller {
     public function showUploadFile(Request $request)
     {
 
-        //return json_encode($request->hasFile('file'));
         $file = $request->file('file');
 
 
-
-        //Display File Name
-//        echo 'File Name: ' . $file->getClientOriginalName();
-//        echo '<br>';
-//
-//        //Display File Extension
-//        echo 'File Extension: ' . $file->getClientOriginalExtension();
-//        echo '<br>';
-//
-//        //Display File Real Path
-//        echo 'File Real Path: ' . $file->getRealPath();
-//        echo '<br>';
-//
-//        //Display File Size
-//        echo 'File Size: ' . $file->getSize();
-//        echo '<br>';
-//
-//        //Display File Mime Type
-//        echo 'File Mime Type: ' . $file->getMimeType();
         //Move Uploaded File
         $destinationPath = 'uploads';
-        $file->move($destinationPath, $file->getClientOriginalName());
+        //$file->move($destinationPath, $file->getClientOriginalName());
 
+        if ($file->getMimeType() != 'application/pdf'){
+            return 'Tipo de archivo no permitido';
+        }
+
+        $info = 'File name: ' . $file->getClientOriginalName() . '<br>';
+        $info .= 'File extension: ' . $file->getClientOriginalExtension() . '<br>';
+        $info .= 'Path Local: ' . $file->getRealPath() . '<br>';
+        $info .= 'File Size: ' . $file->getSize() . '<br>';
+        $info .= 'File Tipo: ' . $file->getMimeType() . '<br>';
+        $info .= 'Contenido: <br>';
+
+        \Log::info("$info");
 
 
         $parser = new \Smalot\PdfParser\Parser();
         $sourcefile = public_path() . '\\uploads\\' . $file->getClientOriginalName();
 
-        $pdf = $parser->parseFile($sourcefile);
-        try {
+        $pdf = $parser->parseFile($file->getPathName());
+        try
+        {
             $text = $pdf->getText();
-        } catch (Exception $ex) {
-            return 0;
-        }
-        
+            //$text = str_replace('\t', '<p/>', $text);
+//
+//            foreach (preg_split("/((\r?\n)|(\r\n?))/", $text) as $line)
+//            {
+//                
+//            }
 
-        return $text;
+            \Log::info("texto");
+
+            return $text;
+        } catch (Exception $ex)
+        {
+            return $ex->getMessage();
+        }
+
+
+        return $info;
+    }
+
+    public function generate()
+    {
+
+        // $text = (new \Spatie\PdfToText\Pdf())
+        //         ->setPdf(public_path() . '\\uploads\\api.pdf')
+        //         ->text();
+
+
+        return Pdf::getText('api.pdf');
     }
 
 }

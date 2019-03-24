@@ -43,27 +43,29 @@ $(document).ready(function () {
 
 
         $.ajax({
-            url: 'http://localhost:8888/uploadfile',
+            //url: 'https://test-student.000webhostapp.com/laravel-pdf/uploadfile',
+            url: '/uploadfile',
             data: formData,
             type: 'post',
             contentType: false,
             dataType: 'html',
             cache: false,
             processData: false,
+            timeout: 10000,
             beforeSend: function () {
                 $(".result").html('');
                 $(".result").html('procesando, espere...');
             },
             success: function (respuesta) {
-                $(".result").html(respuesta);
+
+                $(".result").text(respuesta);
+
+                console.log(respuesta);
             },
             complete: function (xhr, textStatus) {
                 console.log(xhr.status);
             },
             error: function (xhr, textStatus, error) {
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
 
                 $(".result").html(textStatus);
             }
@@ -74,17 +76,59 @@ $(document).ready(function () {
 
         <!-- Styles -->
 
+        <style>
+            .container{
+                margin-top:20px;
+            }
+            .image-preview-input {
+                position: relative;
+                overflow: hidden;
+                margin: 0px;    
+                color: #333;
+                background-color: #fff;
+                border-color: #ccc;    
+            }
+            .image-preview-input input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 0;
+                padding: 0;
+                font-size: 20px;
+                cursor: pointer;
+                opacity: 0;
+                filter: alpha(opacity=0);
+            }
+            .image-preview-input-title {
+                margin-left:2px;
+            }
+        </style>
+
     </head>
     <body>
-        <form enctype="multipart/form-data" id="formuploadajax" method="post">
-            <input  type="file" id="archivo1" name="archivo1"  accept="application/pdf"/>
-            <div id="result"></div>
-            <br />
-            <input type="submit" value="Subir archivos"/>
-        </form>
 
-        <div class="contenedor">
-            <div class="result"/>
+
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm">
+                    <form enctype="multipart/form-data" id="formuploadajax" method="post">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                        </div>
+                        <input type="submit" value="Leer Pdf"/>
+                    </form>
+                </div>
+                <div class="col-sm">
+                    <div class="result" style="white-space: pre"></div>
+                </div>
+                <div class="col-sm">
+
+                </div>
+            </div>
         </div>
 
 

@@ -20,3 +20,4 @@ Route::get('/pdf', function() {
 });
 Route::post('/read',"ReadPdfController@read");
 Route::post('/uploadfile','ReadPdfController@showUploadFile');
+Route::post('/test','ReadPdfController@generate');
