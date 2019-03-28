@@ -46,6 +46,7 @@ $(document).ready(function () {
         $.ajax({
             //url: '/laravel-pdf/uploadfile',
             url: '/uploadfile',
+
             data: formData,
             type: 'post',
             contentType: false,
