@@ -52,7 +52,9 @@ class ReadPdfController extends Controller {
         $pdf = $parser->parseFile($file->getPathName());
         try
         {
-            $text = $pdf->getText();
+            // Retrieve all pages from the pdf file.
+            $pages  = $pdf->getPages();
+            //$text = $pdf->getText();
             //$text = str_replace('\t', '<p/>', $text);
 //
 //            foreach (preg_split("/((\r?\n)|(\r\n?))/", $text) as $line)
@@ -60,7 +62,17 @@ class ReadPdfController extends Controller {
 //                
 //            }
 
+            $text = '';
+            foreach ($pages as $page) {
+                $text .= $page->getText();
+            }
+
             \Log::info("texto");
+
+             //$text = str_replace(' ','-',$text);
+
+            
+
 
             return $text;
         } catch (Exception $ex)

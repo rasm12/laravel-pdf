@@ -12,12 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pdf_read');
 });
 
 Route::get('/pdf', function() {
     return view('pdf_read');
 });
 Route::post('/read',"ReadPdfController@read");
-Route::post('/uploadfile','ReadPdfController@showUploadFile');
+#Route::post('/uploadfile','ReadPdfController@showUploadFile');
 Route::post('/test','ReadPdfController@generate');
+
+
